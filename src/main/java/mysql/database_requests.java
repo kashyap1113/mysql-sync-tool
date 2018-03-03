@@ -35,8 +35,22 @@ public class database_requests extends HttpServlet {
 				e.printStackTrace();
 			} 
 		}
-		
-		
+		else if(scategory.equals("insert_local_connection")) {
+			String sConnectionName=request.getParameter("connection_name");
+			String sHost=request.getParameter("host");
+			String sPort=request.getParameter("port");
+			String sUsername=request.getParameter("username");
+			String sPassword=request.getParameter("password");
+			
+		}
+		else if(scategory.equals("insert_client_connection"))
+		{
+			String sConnectionName=request.getParameter("connection_name");
+			String sHost=request.getParameter("host");
+			String sPort=request.getParameter("port");
+			String sUsername=request.getParameter("username");
+			String sPassword=request.getParameter("password");
+		}
 	}
 
 	/**

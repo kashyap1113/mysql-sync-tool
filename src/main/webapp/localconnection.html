@@ -12,6 +12,26 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <Script>
+	
+$(document).on('click', '#save', function(){
+	 var sConnectionName=$("#connectionname").val();
+	 var sHost=$("#host").val();
+	 var sPort=$("#port").val();
+	 var sUsername=$("#username").val();
+	 var sPassword=$("#Password").val();
+	 $.ajax({
+			type : "get",
+			url : "database_requests",
+			data : "type=insert_local_connection&connection_name="+sConnectionName+ 
+			        "&host="+sHost +"&port="+ sPort+"&username="+ sUsername+"&password="+ sPassword,
+			success : function(response) {
+				alert(response);
+			},
+			dataType : 'text'
+		});
+	 
+	 
+});
 	$(document).ready(function() {
 
 		$.ajax({
@@ -24,6 +44,10 @@
 			dataType : 'text'
 		});
 	});
+	
+	
+	
+	
 </Script>
 
 </head>
@@ -85,7 +109,7 @@
 
 		</div>
 
-		<button type="button" class="btn btn-default">
+		<button type="button" class="btn btn-default" id="save">
 			<span class="glyphicon glyphicon-floppy-disk"></span> Save
 		</button>
 		<button type="button" class="btn btn-primary">
