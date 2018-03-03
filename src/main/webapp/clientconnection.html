@@ -1,0 +1,83 @@
+<html>
+	<head>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<script>
+				function() { $.ajax({
+					type : "get",
+					url : "database_requests",
+					data : "type=dbreqtest",
+					success : function(response) {
+						alert(response);
+					},
+					dataType : 'text'
+					});}
+		</script>
+		
+	</head>
+	
+	<body style="margin:10px;" >
+	
+			<div id="menu" style="width:300px;float:left;margin-right:50px">
+			<h4>Local Database</h4>
+				<ul class="list-group">
+				  <li class="list-group-item"><span data-toggle="collapse" data-target="#demo" class="glyphicon glyphicon-plus"></span><span class="glyphicon glyphicon-wrench"></span> gps 
+				  <div id="demo" class="collapse" style="margin-top:10px;">
+					<span class="glyphicon glyphicon-folder-open"></span>  Groups
+					<ul class="list-group" style="margin-top:10px;">
+				  <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Common</li>
+				  <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Screen</li>
+				  <li class="list-group-item"><span class="glyphicon glyphicon-plus-sign"></span> Add New Group</li>
+			</ul>
+				  </div>
+				  </li>
+				  <li class="list-group-item"><span class="glyphicon glyphicon-plus"></span> gps2</li>
+				  <li class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Third item</li>
+			</ul>
+			</div>
+			
+			<div id="overview" style="width:700px;float:left">
+			
+			
+			<div class="form-group">
+				<label for="name">Client Name:</label>
+				<input type="text" class="form-control" id="connectionname">
+			</div>
+			
+			<div class="form-group">
+				<label for="name">Host:</label>
+				<input type="text" class="form-control" id="host">
+				
+			</div>
+			
+			<div class="form-group">
+				<label for="name">Port:</label>
+				<input type="text" class="form-control" id="port">
+				
+			</div>
+			<div class="form-group">
+				<label for="name">Username:</label>
+				<input type="text" class="form-control" id="username">
+				
+			</div>
+			
+			<div class="form-group">
+				<label for="name">Password:</label>
+				<input type="text" class="form-control" id="Password">
+				
+			</div>
+			
+			<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+				 <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+			
+			</div>
+	</body>
+
+</html>
