@@ -10,8 +10,18 @@
   	<description></description>
   	<servlet-class>com.kashyap1113.mysqlsynctool.ScriptExecutorServlet</servlet-class>
   </servlet>
+   <servlet>
+   	<servlet-name>database_requests</servlet-name>
+   	<display-name>database_requests</display-name>
+   	<description></description>
+   	<servlet-class>mysql.database_requests</servlet-class>
+   </servlet>
   <servlet-mapping>
   	<servlet-name>ScriptExecutorServlet</servlet-name>
   	<url-pattern>/scriptexecutor.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>database_requests</servlet-name>
+  	<url-pattern>/database_requests</url-pattern>
   </servlet-mapping>
 </web-app>

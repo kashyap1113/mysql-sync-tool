@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+	</head>
+	
+	<body style="margin:10px;" >
+	
+			<div id="menu" style="width:300px;float:left;margin-right:50px">
+			<h4>Local Database</h4>
+				<ul class="list-group">
+				  <li class="list-group-item"><span data-toggle="collapse" data-target="#demo" class="glyphicon glyphicon-plus"></span> <span class="glyphicon glyphicon-wrench"></span> gps 
+				  <div id="demo" class="collapse" style="margin-top:10px;">
+					<span class="glyphicon glyphicon-folder-open"></span>  Groups
+					<ul class="list-group" style="margin-top:10px;">
+				  <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Common</li>
+				  <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Screen</li>
+				  <li class="list-group-item"><span class="glyphicon glyphicon-plus-sign"></span> Add New Group</li>
+			</ul>
+				  </div>
+				  </li>
+				  <li class="list-group-item"><span class="glyphicon glyphicon-plus"></span> gps2</li>
+				  <li class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Third item</li>
+				  <li class="list-group-item"><span class="glyphicon glyphicon-plus-sign"></span> Add New Connection</li>
+			</ul>
+			</div>
+			
+			<div id="overview" style="width:700px;float:left">
+			
+			
+			<div class="form-group">
+				<label for="name">Group Name:</label>
+				<input type="text" class="form-control" id="GroupName">
+			</div>
+			
+			<div class="form-group">
+				<label for="name">Choose Table:</label>
+				<select class="multiselect-ui form-control" multiple="multiple" searchable="Search here..">
+					<option value="" disabled selected>Choose your database</option>
+					<option value="1">gpsdevicedata</option>
+					<option value="2">gpsdevicedatalive</option>
+					<option value="3">customers</option>
+					<option value="4">consignmentactualtours</option>
+					<option value="5">transporter</option>
+				</select>
+				 <table class="table table-striped">
+					<thead>
+					  <tr>
+						<th>Table</th>
+						<th>Scheme</th>
+						<th>Data</th>
+					  </tr>
+					</thead>
+					<tbody>
+					  <tr>
+						<td>gpsdevicedata</td>
+						<td><input type="checkbox"></td>
+						<td><input type="checkbox"></td>
+					  </tr>
+					  <tr>
+						<td>gpsdevicedatalive</td>
+						<td><input type="checkbox"></td>
+						<td><input type="checkbox"></td>
+					  </tr>
+					  <tr>
+						<td>customers</td>
+						<td><input type="checkbox"></td>
+						<td><input type="checkbox"></td>
+					  </tr>
+					</tbody>
+				  </table>
+				<br/>
+				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+				 <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+			</div>
+			
+			</div>
+	</body>
+
+</html>
