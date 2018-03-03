@@ -29,7 +29,7 @@ public class ScriptExecutorServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 	    String scriptPath = request.getParameter("scriptPath");
 	    String arguments = request.getParameter("arguments") == null ? "" : request.getParameter("arguments");
-	    String result = new PythonScriptExecutor().executeScript(scriptPath, arguments.split("\\w+"));
+	    String result = new PythonScriptExecutor().executeScript(scriptPath, arguments.split("\\s+"));
 		PrintWriter writer = response.getWriter();
 		writer.println(result);
 	}
