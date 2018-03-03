@@ -5,7 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import mysql.Database_Business_Logics;
 /**
  * Servlet implementation class database_requests
  */
@@ -27,7 +27,17 @@ public class database_requests extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		String type=request.getParameter("type");
+		String scategory=request.getParameter("type");
+		
+		if(scategory.equals("getalldatabase")) {
+			try {
+				String sJsonResponse=Database_Business_Logics.get_all_database_names();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}
+		
 		
 	}
 
