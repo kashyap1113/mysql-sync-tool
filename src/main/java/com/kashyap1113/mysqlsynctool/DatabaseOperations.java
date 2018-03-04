@@ -47,6 +47,9 @@ public class DatabaseOperations {
 		    if (resultSet != null) {
                 try { resultSet.close(); } catch (SQLException e) {}
 		    }
+		    if (connection != null) {
+		        try { connection.close(); } catch (SQLException e) {}
+		    }
 		}
 		Tables tables = new Tables(alTables);
 		jsonResponse = gson.toJson(tables);
