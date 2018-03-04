@@ -11,11 +11,12 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import mysql.model.ApiResponse;
 import mysql.model.Tables;
 
 public class Database_Business_Logics {
 	Gson gson;
-	
+	ApiResponse jsonResult;
 	public Database_Business_Logics() {
 		super();
 		gson = new GsonBuilder().setPrettyPrinting().create();
@@ -28,6 +29,7 @@ public class Database_Business_Logics {
 		String sDatabaseName = "mysqlsync";
 		String sTableName = "";
 		List<String> alTables = new ArrayList<String>();
+		jsonResult = new ApiResponse<Tables>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			
@@ -42,12 +44,22 @@ public class Database_Business_Logics {
 				alTables.add(sTableName);
 			}
 			con.close();
-
+			
+			if (alTables.size() == 0) {
+			    jsonResult.setResult(ApiResponse.RESULT_NO_DATA);
+			    jsonResult.setData(null);
+			} else {
+    			Tables tables = new Tables(alTables);    	        
+    	        jsonResult.setResult(ApiResponse.RESULT_SUCCESS);
+    	        jsonResult.setData(alTables);
+			}
 		} catch (SQLException ex) {
+		    jsonResult.setResult(ApiResponse.RESULT_FAIL);
+            jsonResult.setData(null);
 			ex.printStackTrace();
 		}
-		Tables tables = new Tables(alTables);
-		jsonResponse = gson.toJson(tables);
+		
+		jsonResponse = gson.toJson(jsonResult);
 		return jsonResponse;
 	}
 
