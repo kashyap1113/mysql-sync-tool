@@ -1,4 +1,4 @@
-package mysql.model;
+package com.kashyap1113.mysqlsynctool.model.dto;
 
 import java.util.List;
 

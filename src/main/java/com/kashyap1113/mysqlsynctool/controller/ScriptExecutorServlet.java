@@ -1,4 +1,4 @@
-package mysql;
+package com.kashyap1113.mysqlsynctool.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,16 +7,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.kashyap1113.mysqlsynctool.PythonScriptExecutor;
+
 /**
- * Servlet implementation class database_requests
+ * Servlet implementation class Test
  */
-public class database_requests extends HttpServlet {
+public class ScriptExecutorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public database_requests() {
+    public ScriptExecutorServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,19 +29,11 @@ public class database_requests extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String scategory=request.getParameter("type");
+	    String scriptPath = request.getParameter("scriptPath");
+	    String arguments = request.getParameter("arguments") == null ? "" : request.getParameter("arguments");
+	    String result = new PythonScriptExecutor().executeScript(scriptPath, arguments.split("\\s+"));
 		PrintWriter writer = response.getWriter();
-		Database_Business_Logics dbl = new Database_Business_Logics();
-		String sJsonResponse = "";
-		if(scategory.equals("getalldatabase")) {
-			try {
-				sJsonResponse=dbl.get_all_database_names();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		writer.print(sJsonResponse);	
+		writer.println(result);
 	}
 
 	/**
@@ -47,7 +42,6 @@ public class database_requests extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
 	}
 
 }

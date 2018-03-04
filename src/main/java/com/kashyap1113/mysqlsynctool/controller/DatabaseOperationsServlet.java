@@ -1,4 +1,4 @@
-package com.kashyap1113.mysqlsynctool;
+package com.kashyap1113.mysqlsynctool.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,16 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kashyap1113.mysqlsynctool.DatabaseOperations;
 /**
- * Servlet implementation class Test
+ * Servlet implementation class database_requests
  */
-public class ScriptExecutorServlet extends HttpServlet {
+public class DatabaseOperationsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ScriptExecutorServlet() {
+    public DatabaseOperationsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,11 +28,20 @@ public class ScriptExecutorServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	    String scriptPath = request.getParameter("scriptPath");
-	    String arguments = request.getParameter("arguments") == null ? "" : request.getParameter("arguments");
-	    String result = new PythonScriptExecutor().executeScript(scriptPath, arguments.split("\\s+"));
+		String scategory=request.getParameter("type");
 		PrintWriter writer = response.getWriter();
-		writer.println(result);
+		DatabaseOperations dbl = new DatabaseOperations();
+		String sJsonResponse = "";
+		String sDatabaseName = "practice";
+		if(scategory.equals("getalldatabase")) {
+			try {
+				sJsonResponse=dbl.getAllTables(sDatabaseName);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		writer.print(sJsonResponse);	
 	}
 
 	/**
@@ -40,6 +50,7 @@ public class ScriptExecutorServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		
 	}
 
 }
