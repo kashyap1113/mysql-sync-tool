@@ -47,8 +47,8 @@ public class DatabaseOperationsServlet extends HttpServlet {
         try {
             if (type.equals("getalldatabase")) {
                 sJsonResponse = dbo.getAllTables(sDatabaseName);
-            } else if (type.equals("")) {
-                
+            } else if (type.equals("getAllConnections")) {
+                sJsonResponse = dbo.getAllConnections2(sDatabaseName);
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block

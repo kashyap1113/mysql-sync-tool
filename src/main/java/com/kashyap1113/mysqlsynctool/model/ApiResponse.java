@@ -28,4 +28,16 @@ public class ApiResponse<T> {
     public void setData(T data) {
         this.data = data;
     }
+    
+    public void setResultSuccess() {
+        this.result = RESULT_SUCCESS;
+    }
+    
+    public void setResultFail() {
+        this.result = RESULT_FAIL;
+    }
+    
+    public void setResultNoData() {
+        this.result = RESULT_NO_DATA;
+    }
 }

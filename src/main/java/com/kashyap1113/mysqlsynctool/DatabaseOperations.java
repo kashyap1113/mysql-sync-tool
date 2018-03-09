@@ -11,6 +11,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kashyap1113.mysqlsynctool.model.ApiResponse;
 import com.kashyap1113.mysqlsynctool.model.ConnectionParams;
+import com.kashyap1113.mysqlsynctool.model.dao.MySQLSyncToolDAO;
+import com.kashyap1113.mysqlsynctool.model.dao.impl.MySQLSyncToolDAOImpl;
+import com.kashyap1113.mysqlsynctool.model.dto.TblConnectionGroups;
+import com.kashyap1113.mysqlsynctool.model.dto.TblConnections;
+import com.kashyap1113.mysqlsynctool.model.dto.TblGroupTables;
 
 public class DatabaseOperations {
     private Gson gson;
@@ -18,6 +23,7 @@ public class DatabaseOperations {
     private ResultSet resultSet;
     private Connection connection;
     private ConnectionParams connectionParams;
+    private MySQLSyncToolDAO dao;
     
 	public DatabaseOperations() {
         super();
@@ -98,6 +104,22 @@ public class DatabaseOperations {
             if (connection != null) {
                 try { connection.close(); } catch (SQLException e) {}
             }
+        }
+        return gson.toJson(apiResponse);
+    }
+    
+    public String getAllConnections2(String databaseName) {
+        connectionParams.setDatabaseName(databaseName);
+        ApiResponse<List<TblConnections>> apiResponse = new ApiResponse<List<TblConnections>>();
+        
+        dao = new MySQLSyncToolDAOImpl(connectionParams);
+        List<TblConnections> connectionsList = dao.getAllConnections();
+        
+        if (connectionsList.size() > 0) {
+            apiResponse.setResultSuccess();
+            apiResponse.setData(connectionsList);
+        } else {
+            apiResponse.setResultNoData();
         }
         return gson.toJson(apiResponse);
     }
