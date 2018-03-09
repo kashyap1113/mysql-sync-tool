@@ -139,6 +139,9 @@ public class Database_Business_Logics {
 		return jsonResponse;
 	}
 
+	public String getAllClientConnection() {
+	    
+	}
 	
 	
 	

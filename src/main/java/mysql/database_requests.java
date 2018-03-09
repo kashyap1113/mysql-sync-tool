@@ -66,6 +66,7 @@ public class database_requests extends HttpServlet {
             } else if (sRequestCategory.equals("view_local_connection")) {
 
                 sLocalConnectionId = request.getParameter("local_connection_id");
+                //TODO Implement this method
 
             } else if (sRequestCategory.equals("edit_local_connection")) {
 
@@ -81,6 +82,7 @@ public class database_requests extends HttpServlet {
                 sLocalConnectionId = request.getParameter("local_connection_id");
 
             } else if (sRequestCategory.equals("view_all_clients_connection")) {
+                //TODO Implement this method
 
             } else if (sRequestCategory.equals("insert_client_connection")) {
 
@@ -93,7 +95,7 @@ public class database_requests extends HttpServlet {
             } else if (sRequestCategory.equals("view_client_connection")) {
 
                 sClientConnectionId = request.getParameter("client_connection_id");
-
+                //TODO Implement this method
             } else if (sRequestCategory.equals("edit_client_connection")) {
 
                 sClientConnectionId = request.getParameter("client_connection_id");
