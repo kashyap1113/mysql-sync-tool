@@ -22,12 +22,13 @@ public class DatabaseOperations {
 	public DatabaseOperations() {
         super();
         gson = new GsonBuilder().setPrettyPrinting().create();  
-        connectionParams = new ConnectionParams();
-        connectionParams.setHostname("localhost");
-        connectionParams.setPortNo(3306);
-        connectionParams.setUsername("root");
-        connectionParams.setPassword("root");
+        connectionParams = new ConnectionParams();        
     }
+	
+	public DatabaseOperations(ConnectionParams connectionParams) {
+	    this();
+	    this.connectionParams = connectionParams;
+	}
 
     public String getAllTables(String sDatabaseName) {
         connectionParams.setDatabaseName(sDatabaseName);
