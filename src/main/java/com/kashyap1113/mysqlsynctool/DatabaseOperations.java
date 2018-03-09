@@ -10,21 +10,28 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kashyap1113.mysqlsynctool.model.ApiResponse;
+import com.kashyap1113.mysqlsynctool.model.ConnectionParams;
 
 public class DatabaseOperations {
     private Gson gson;
     private PreparedStatement pstmt;
     private ResultSet resultSet;
     private Connection connection;
+    private ConnectionParams connectionParams;
     
 	public DatabaseOperations() {
         super();
-        gson = new GsonBuilder().setPrettyPrinting().create();        
+        gson = new GsonBuilder().setPrettyPrinting().create();  
+        connectionParams = new ConnectionParams();
+        connectionParams.setHostname("localhost");
+        connectionParams.setPortNo(3306);
+        connectionParams.setUsername("root");
+        connectionParams.setPassword("root");
     }
 
     public String getAllTables(String sDatabaseName) {
-        sDatabaseName = "practice";
-        connection = new ConnectionManager("localhost", "root", "root", 3306, sDatabaseName).getConnection();		
+        connectionParams.setDatabaseName(sDatabaseName);
+        connection = new ConnectionManager(connectionParams).getConnection();		
 		String sTableName = "";
 		List<String> alTables = new ArrayList<String>();
 		ApiResponse<List<String>> apiResponse = new ApiResponse<List<String>>();
@@ -60,10 +67,10 @@ public class DatabaseOperations {
 		return gson.toJson(apiResponse);
 	}
     
-    public String getAllLocalConnections(String sDatabaseName) {
-        sDatabaseName = "practice";
-        connection = new ConnectionManager("localhost", "root", "root", 3306, sDatabaseName).getConnection();
-        String sql = "SELECT connection_name FROM tbl_local_connections";
+    public String getAllConnections(String sDatabaseName) {
+        connectionParams.setDatabaseName(sDatabaseName);
+        connection = new ConnectionManager(connectionParams).getConnection();
+        String sql = "SELECT connection_name FROM tbl_connections";
         List<String> alConnections = new ArrayList<String>();
         ApiResponse<List<String>> apiResponse = new ApiResponse<List<String>>();
         try {

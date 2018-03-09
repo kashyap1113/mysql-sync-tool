@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.kashyap1113.mysqlsynctool.model.ConnectionParams;
+
 public class ConnectionManager {
     private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
 
@@ -30,7 +32,15 @@ public class ConnectionManager {
         this.port = port;
         this.database = database;
     }
-
+    
+    public ConnectionManager(ConnectionParams params) {
+        this.database = params.getDatabaseName();
+        this.host = params.getHostname();
+        this.port = params.getPortNo();
+        this.username = params.getUsername();
+        this.password = params.getPassword();
+    }
+    
     public String getHost() {
         return host;
     }

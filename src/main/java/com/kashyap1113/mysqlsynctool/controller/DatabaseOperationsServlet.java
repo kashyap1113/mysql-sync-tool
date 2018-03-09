@@ -32,7 +32,7 @@ public class DatabaseOperationsServlet extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		DatabaseOperations dbl = new DatabaseOperations();
 		String sJsonResponse = "";
-		String sDatabaseName = "practice";
+		String sDatabaseName = "mysqlsync";
 		if(scategory.equals("getalldatabase")) {
 			try {
 				sJsonResponse=dbl.getAllTables(sDatabaseName);
