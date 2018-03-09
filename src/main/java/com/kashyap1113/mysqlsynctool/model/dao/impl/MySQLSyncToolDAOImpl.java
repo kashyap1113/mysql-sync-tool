@@ -95,13 +95,40 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
     }
 
     public List<TblConnectionGroups> getAllConnectionGroups() {
-        // TODO Auto-generated method stub
-        return null;
+        List<TblConnectionGroups> list = new ArrayList<TblConnectionGroups>();
+        sql = "SELECT group_id, group_name FROM tbl_connection_groups";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                list.add(new TblConnectionGroups(resultSet.getInt("group_id"), resultSet.getString("group_name")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try { resultSet.close(); } catch (Exception ex) {}
+            try { connection.close(); } catch (Exception ex) {}
+        }
+        return list;
     }
 
     public TblConnectionGroups getConnectionGroupById(int id) {
-        // TODO Auto-generated method stub
-        return null;
+        TblConnectionGroups tblConnectionGroups = new TblConnectionGroups();
+        sql = "SELECT group_id, group_name FROM tbl_connection_groups WHERE group_id=?";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                tblConnectionGroups = new TblConnectionGroups(resultSet.getInt("group_id"), resultSet.getString("group_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try { resultSet.close(); } catch (Exception ex) {}
+            try { connection.close(); } catch (Exception ex) {}
+        }
+        return tblConnectionGroups;
     }
 
     public boolean updateConnectionGroup(TblConnectionGroups tblConnectionGroups) {
@@ -115,18 +142,77 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
     }
 
     public List<TblGroupTables> getAllGroupTables() {
-        // TODO Auto-generated method stub
-        return null;
+        List<TblGroupTables> list = new ArrayList<TblGroupTables>();
+        sql = "SELECT id, group_id, table_name, is_schema, is_data FROM tbl_group_tables";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                list.add(new TblGroupTables(
+                        resultSet.getInt("id"), 
+                        resultSet.getInt("group_id"), 
+                        resultSet.getString("table_name"), 
+                        resultSet.getString("is_schema"), 
+                        resultSet.getString("is_data")
+                        ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try { resultSet.close(); } catch (Exception ex) {}
+            try { connection.close(); } catch (Exception ex) {}
+        }
+        return list;
     }
 
     public List<TblGroupTables> getAllGroupTablesByGroupId(int groupId) {
-        // TODO Auto-generated method stub
-        return null;
+        List<TblGroupTables> list = new ArrayList<TblGroupTables>();
+        sql = "SELECT id, group_id, table_name, is_schema, is_data FROM tbl_group_tables WHERE group_id=?";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, groupId);
+            resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                list.add(new TblGroupTables(
+                        resultSet.getInt("id"), 
+                        resultSet.getInt("group_id"), 
+                        resultSet.getString("table_name"), 
+                        resultSet.getString("is_schema"), 
+                        resultSet.getString("is_data")
+                        ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try { resultSet.close(); } catch (Exception ex) {}
+            try { connection.close(); } catch (Exception ex) {}
+        }
+        return list;        
     }
 
     public TblGroupTables getGroupTablesById(int id) {
-        // TODO Auto-generated method stub
-        return null;
+        TblGroupTables tblGroupTables = new TblGroupTables();
+        sql = "SELECT id, group_id, table_name, is_schema, is_data FROM tbl_group_tables WHERE id=?";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                tblGroupTables = new TblGroupTables(
+                    resultSet.getInt("id"), 
+                    resultSet.getInt("group_id"), 
+                    resultSet.getString("table_name"), 
+                    resultSet.getString("is_schema"), 
+                    resultSet.getString("is_data")
+                    );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try { resultSet.close(); } catch (Exception ex) {}
+            try { connection.close(); } catch (Exception ex) {}
+        }
+        return tblGroupTables;
     }
 
     public void updateGroupTablesList(List<TblGroupTables> tblGroupTablesList) {

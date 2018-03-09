@@ -113,11 +113,43 @@ public class DatabaseOperations {
         ApiResponse<List<TblConnections>> apiResponse = new ApiResponse<List<TblConnections>>();
         
         dao = new MySQLSyncToolDAOImpl(connectionParams);
-        List<TblConnections> connectionsList = dao.getAllConnections();
+        List<TblConnections> list = dao.getAllConnections();
         
-        if (connectionsList.size() > 0) {
+        if (list.size() > 0) {
             apiResponse.setResultSuccess();
-            apiResponse.setData(connectionsList);
+            apiResponse.setData(list);
+        } else {
+            apiResponse.setResultNoData();
+        }
+        return gson.toJson(apiResponse);
+    }
+    
+    public String getAllConnectionGroups(String databaseName) {
+        connectionParams.setDatabaseName(databaseName);
+        ApiResponse<List<TblConnectionGroups>> apiResponse = new ApiResponse<List<TblConnectionGroups>>();
+        
+        dao = new MySQLSyncToolDAOImpl(connectionParams);
+        List<TblConnectionGroups> list = dao.getAllConnectionGroups();
+        
+        if (list.size() > 0) {
+            apiResponse.setResultSuccess();
+            apiResponse.setData(list);
+        } else {
+            apiResponse.setResultNoData();
+        }
+        return gson.toJson(apiResponse);
+    }
+    
+    public String getAllGroupTables(String databaseName) {
+        connectionParams.setDatabaseName(databaseName);
+        ApiResponse<List<TblGroupTables>> apiResponse = new ApiResponse<List<TblGroupTables>>();
+        
+        dao = new MySQLSyncToolDAOImpl(connectionParams);
+        List<TblGroupTables> list = dao.getAllGroupTables();
+        
+        if (list.size() > 0) {
+            apiResponse.setResultSuccess();
+            apiResponse.setData(list);
         } else {
             apiResponse.setResultNoData();
         }

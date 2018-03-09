@@ -45,10 +45,18 @@ public class DatabaseOperationsServlet extends HttpServlet {
         String sDatabaseName = "mysqlsync";
 
         try {
-            if (type.equals("getalldatabase")) {
+            if (type.equals("getAllTables")) {
                 sJsonResponse = dbo.getAllTables(sDatabaseName);
             } else if (type.equals("getAllConnections")) {
                 sJsonResponse = dbo.getAllConnections2(sDatabaseName);
+            } else if (type.equals("getAllConnectionGroups")) {
+                sJsonResponse = dbo.getAllConnectionGroups(sDatabaseName);
+            } else if (type.equals("getAllGroupTables")) {
+                sJsonResponse = dbo.getAllGroupTables(sDatabaseName);
+            } else if (type.equals("getAllConnectionGroups")) {
+                sJsonResponse = dbo.getAllConnectionGroups(sDatabaseName);
+            } else if (type.equals("getAllConnectionGroups")) {
+                sJsonResponse = dbo.getAllConnectionGroups(sDatabaseName);
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
