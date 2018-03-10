@@ -74,7 +74,7 @@ public class DatabaseOperations {
 		return gson.toJson(apiResponse);
 	}
     
-    public String getAllConnections(String sDatabaseName) {
+    public String getAllConnections2(String sDatabaseName) {
         connectionParams.setDatabaseName(sDatabaseName);
         connection = new ConnectionManager(connectionParams).getConnection();
         String sql = "SELECT connection_name FROM tbl_connections";
@@ -108,7 +108,7 @@ public class DatabaseOperations {
         return gson.toJson(apiResponse);
     }
     
-    public String getAllConnections2(String databaseName) {
+    public String getAllConnections(String databaseName) {
         connectionParams.setDatabaseName(databaseName);
         ApiResponse<List<TblConnections>> apiResponse = new ApiResponse<List<TblConnections>>();
         
@@ -123,6 +123,8 @@ public class DatabaseOperations {
         }
         return gson.toJson(apiResponse);
     }
+    
+    
     
     public String getAllConnectionGroups(String databaseName) {
         connectionParams.setDatabaseName(databaseName);

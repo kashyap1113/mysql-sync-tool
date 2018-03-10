@@ -86,12 +86,45 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
             try { connection.close(); } catch (Exception ex) {}
         }
         */
-        return false;
+        boolean result = false;
+        sql = "UPDATE tbl_connections SET connection_name=?, hostname=?, port=?, username=?, password=?, connection_type=? WHERE id=?";
+        try {
+            pstmt = connection.prepareStatement(sql);            
+            pstmt.setString(1, tblConnections.getConnectionName());
+            pstmt.setString(2, tblConnections.getHostname());
+            pstmt.setInt(3, tblConnections.getPortNo());
+            pstmt.setString(4, tblConnections.getUsername());
+            pstmt.setString(5, tblConnections.getPassword());
+            pstmt.setString(6, tblConnections.getConnectionName());
+            pstmt.setInt(7, tblConnections.getId());
+            pstmt.executeUpdate();  
+            result = true;
+        } catch (SQLException e) {
+            result = false;
+            e.printStackTrace();            
+        } finally {
+            try { resultSet.close(); } catch (Exception ex) {}
+            try { connection.close(); } catch (Exception ex) {}
+        }
+        return result;
     }
 
     public boolean deleteConnection(int id) {
-        // TODO Auto-generated method stub
-        return false;
+        boolean result = false;
+        sql = "DELETE FROM tbl_connections WHERE id=?";
+        try {
+            pstmt = connection.prepareStatement(sql);            
+            pstmt.setInt(1, id);            
+            pstmt.executeUpdate();  
+            result = true;
+        } catch (SQLException e) {
+            result = false;
+            e.printStackTrace();            
+        } finally {
+            try { resultSet.close(); } catch (Exception ex) {}
+            try { connection.close(); } catch (Exception ex) {}
+        }
+        return result;
     }
 
     public List<TblConnectionGroups> getAllConnectionGroups() {
@@ -124,21 +157,43 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try { resultSet.close(); } catch (Exception ex) {}
+        } finally {            
             try { connection.close(); } catch (Exception ex) {}
         }
         return tblConnectionGroups;
     }
 
     public boolean updateConnectionGroup(TblConnectionGroups tblConnectionGroups) {
-        // TODO Auto-generated method stub
-        return false;
+        boolean result = false;
+        sql = "UPDATE tbl_connection_groups SET group_name=? WHERE group_id=?";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, tblConnectionGroups.getGroupName());
+            pstmt.setInt(2, tblConnectionGroups.getGroupId());
+            result = true;
+        } catch (SQLException e) {
+            result = false;
+            e.printStackTrace();
+        } finally {            
+            try { connection.close(); } catch (Exception ex) {}
+        }
+        return result;
     }
 
     public boolean deleteConnectionGroup(int id) {
-        // TODO Auto-generated method stub
-        return false;
+        boolean result = false;
+        sql = "DELETE FROM tbl_connection_groups WHERE group_id=?";
+        try {
+            pstmt = connection.prepareStatement(sql);            
+            pstmt.setInt(1, id);
+            result = true;
+        } catch (SQLException e) {
+            result = false;
+            e.printStackTrace();
+        } finally {            
+            try { connection.close(); } catch (Exception ex) {}
+        }
+        return result;
     }
 
     public List<TblGroupTables> getAllGroupTables() {
@@ -221,13 +276,39 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
     }
 
     public boolean updateGroupTable(TblGroupTables tblGroupTables) {
-        // TODO Auto-generated method stub
-        return false;
+        boolean result = false;
+        sql = "UPDATE tbl_connection_groups SET group_id=?, table_name=?, is_schema=?, is_data=? WHERE id=?";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, tblGroupTables.getGroupId());
+            pstmt.setString(2, tblGroupTables.getTableName());
+            pstmt.setString(3, tblGroupTables.getIsSchema());
+            pstmt.setString(4, tblGroupTables.getIsData());
+            pstmt.setInt(5, tblGroupTables.getId());
+            result = true;
+        } catch (SQLException e) {
+            result = false;
+            e.printStackTrace();
+        } finally {            
+            try { connection.close(); } catch (Exception ex) {}
+        }
+        return result;
     }
 
     public boolean deleteGroupTable(int id) {
-        // TODO Auto-generated method stub
-        return false;
+        boolean result = false;
+        sql = "DELETE FROM tbl_group_tables WHERE id=?";
+        try {
+            pstmt = connection.prepareStatement(sql);            
+            pstmt.setInt(1, id);
+            result = true;
+        } catch (SQLException e) {
+            result = false;
+            e.printStackTrace();
+        } finally {            
+            try { connection.close(); } catch (Exception ex) {}
+        }
+        return result;
     }
 
 }
