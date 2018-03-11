@@ -72,6 +72,9 @@ public class DatabaseOperationsServlet extends HttpServlet {
                 sJsonResponse = dbo.insertConnection(tblConnections);
             } else if (type.equals("getGroupsByConnection")) {                
                 sJsonResponse = dbo.getGroupsByConnection();
+            } else if (type.equals("getGroupTablesByGroupId")) {
+                int groupId = Integer.parseInt(request.getParameter("groupId"));
+                sJsonResponse = dbo.getGroupTablesByGroupId(groupId);
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block

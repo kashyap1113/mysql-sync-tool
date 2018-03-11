@@ -14,6 +14,7 @@ import com.kashyap1113.mysqlsynctool.model.ConnectionParams;
 import com.kashyap1113.mysqlsynctool.model.dao.MySQLSyncToolDAO;
 import com.kashyap1113.mysqlsynctool.model.dao.impl.MySQLSyncToolDAOImpl;
 import com.kashyap1113.mysqlsynctool.model.dto.ConnectionAndGroups;
+import com.kashyap1113.mysqlsynctool.model.dto.GroupAndTable;
 import com.kashyap1113.mysqlsynctool.model.dto.IdValue;
 import com.kashyap1113.mysqlsynctool.model.dto.TblConnectionGroups;
 import com.kashyap1113.mysqlsynctool.model.dto.TblConnections;
@@ -176,6 +177,21 @@ public class DatabaseOperations {
             apiResponse.setData(list);
         } else {
             apiResponse.setResultNoData();
+        }
+        return gson.toJson(apiResponse);
+    }
+    
+    public String getGroupTablesByGroupId(int groupId) {
+        ApiResponse<GroupAndTable> apiResponse = new ApiResponse<GroupAndTable>();
+        GroupAndTable groupAndTable = null;
+        try {
+            TblConnectionGroups tblConnectionGroup = dao.getConnectionGroupById(groupId);
+            List<TblGroupTables> groupTablesList = dao.getAllGroupTablesByGroupId(tblConnectionGroup.getGroupId());
+            groupAndTable = new GroupAndTable(tblConnectionGroup, groupTablesList);
+            apiResponse.setResultSuccess();
+            apiResponse.setData(groupAndTable);
+        } catch (Exception ex) {
+            apiResponse.setResultFail();
         }
         return gson.toJson(apiResponse);
     }
