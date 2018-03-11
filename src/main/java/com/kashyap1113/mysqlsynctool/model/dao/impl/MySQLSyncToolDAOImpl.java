@@ -202,11 +202,12 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
         return tblConnectionGroups;
     }
 
-    public List<TblConnectionGroups> getAllConnectionGroupsByConnectionId() {
+    public List<TblConnectionGroups> getAllConnectionGroupsByConnectionId(int connectionId) {
         List<TblConnectionGroups> list = new ArrayList<TblConnectionGroups>();
         sql = "SELECT group_id, connection_id, group_name FROM tbl_connection_groups WHERE connection_id=?";
         try {
             pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, connectionId);
             resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 list.add(new TblConnectionGroups(resultSet.getInt("group_id"), resultSet.getInt("connection_id"), resultSet.getString("group_name")));
@@ -228,6 +229,7 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
             pstmt.setInt(1, tblConnectionGroups.getConnectionId());
             pstmt.setString(1, tblConnectionGroups.getGroupName());
             pstmt.setInt(2, tblConnectionGroups.getGroupId());
+            pstmt.executeUpdate();
             result = true;
         } catch (SQLException e) {
             result = false;
@@ -244,6 +246,7 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
         try {
             pstmt = connection.prepareStatement(sql);            
             pstmt.setInt(1, id);
+            pstmt.executeUpdate();
             result = true;
         } catch (SQLException e) {
             result = false;
@@ -362,6 +365,7 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
             pstmt.setString(3, tblGroupTables.getIsSchema());
             pstmt.setString(4, tblGroupTables.getIsData());
             pstmt.setInt(5, tblGroupTables.getId());
+            pstmt.executeUpdate();
             result = true;
         } catch (SQLException e) {
             result = false;
@@ -378,6 +382,7 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
         try {
             pstmt = connection.prepareStatement(sql);            
             pstmt.setInt(1, id);
+            pstmt.executeUpdate();
             result = true;
         } catch (SQLException e) {
             result = false;
@@ -387,8 +392,4 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
         }
         return result;
     }
-    
-    
-    
-
 }

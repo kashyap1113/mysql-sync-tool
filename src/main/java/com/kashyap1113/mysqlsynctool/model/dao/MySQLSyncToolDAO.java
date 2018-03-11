@@ -18,7 +18,7 @@ public interface MySQLSyncToolDAO {
     public int insertConnectionGroup(TblConnectionGroups tblConnectionGroups);
     public List<TblConnectionGroups> getAllConnectionGroups();
     public TblConnectionGroups getConnectionGroupById(int id);
-    public List<TblConnectionGroups> getAllConnectionGroupsByConnectionId();
+    public List<TblConnectionGroups> getAllConnectionGroupsByConnectionId(int connectionId);
     public boolean updateConnectionGroup(TblConnectionGroups tblConnectionGroups);
     public boolean deleteConnectionGroup(int id);
     
