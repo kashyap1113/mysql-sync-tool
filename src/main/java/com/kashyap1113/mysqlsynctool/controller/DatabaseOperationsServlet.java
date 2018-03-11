@@ -53,7 +53,9 @@ public class DatabaseOperationsServlet extends HttpServlet {
         try {
             if (type.equals("getAllTables")) {
                 sJsonResponse = dbo.getAllTables(connectionParams.getDatabaseName());
-            } else if (type.equals("getAllConnections")) {
+            } else if (type.equals("getConnectionList")) {
+                sJsonResponse = dbo.getConnectionList();
+            }else if (type.equals("getAllConnections")) {
                 sJsonResponse = dbo.getAllConnections();
             } else if (type.equals("getAllConnectionGroups")) {
                 sJsonResponse = dbo.getAllConnectionGroups();
