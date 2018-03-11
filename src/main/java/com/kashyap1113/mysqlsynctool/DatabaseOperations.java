@@ -13,6 +13,7 @@ import com.kashyap1113.mysqlsynctool.model.ApiResponse;
 import com.kashyap1113.mysqlsynctool.model.ConnectionParams;
 import com.kashyap1113.mysqlsynctool.model.dao.MySQLSyncToolDAO;
 import com.kashyap1113.mysqlsynctool.model.dao.impl.MySQLSyncToolDAOImpl;
+import com.kashyap1113.mysqlsynctool.model.dto.ConnectionAndGroups;
 import com.kashyap1113.mysqlsynctool.model.dto.IdValue;
 import com.kashyap1113.mysqlsynctool.model.dto.TblConnectionGroups;
 import com.kashyap1113.mysqlsynctool.model.dto.TblConnections;
@@ -156,6 +157,23 @@ public class DatabaseOperations {
         if (connectionsList.size() > 0) {
             apiResponse.setResultSuccess();
             apiResponse.setData(connectionsList);
+        } else {
+            apiResponse.setResultNoData();
+        }
+        return gson.toJson(apiResponse);
+    }
+    
+    public String getGroupsByConnection() {
+        ApiResponse<List<ConnectionAndGroups>> apiResponse = new ApiResponse<List<ConnectionAndGroups>>();
+        List<ConnectionAndGroups> list = new ArrayList<ConnectionAndGroups>();
+        List<TblConnections> tblConnectionList = dao.getAllConnections();
+        for (TblConnections connection : tblConnectionList) {
+            List<TblConnectionGroups> tblConnectionGroupsList = dao.getAllConnectionGroupsByConnectionId(connection.getId());
+            list.add(new ConnectionAndGroups(connection.getId(), connection.getConnectionName(), tblConnectionGroupsList));
+        }
+        if (list.size() > 0) {
+            apiResponse.setResultSuccess();
+            apiResponse.setData(list);
         } else {
             apiResponse.setResultNoData();
         }

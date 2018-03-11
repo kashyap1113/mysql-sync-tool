@@ -70,6 +70,8 @@ public class DatabaseOperationsServlet extends HttpServlet {
             } else if (type.equals("insertConnection")) {
                 TblConnections tblConnections = gson.fromJson(values, TblConnections.class);
                 sJsonResponse = dbo.insertConnection(tblConnections);
+            } else if (type.equals("getGroupsByConnection")) {                
+                sJsonResponse = dbo.getGroupsByConnection();
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
