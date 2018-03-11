@@ -8,14 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kashyap1113.mysqlsynctool.DatabaseOperations;
 import com.kashyap1113.mysqlsynctool.model.ConnectionParams;
+import com.kashyap1113.mysqlsynctool.model.dto.TblConnectionGroups;
+import com.kashyap1113.mysqlsynctool.model.dto.TblConnections;
+import com.kashyap1113.mysqlsynctool.model.dto.TblGroupTables;
 
 /**
  * Servlet implementation class database_requests
  */
 public class DatabaseOperationsServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -33,30 +39,35 @@ public class DatabaseOperationsServlet extends HttpServlet {
             throws ServletException, IOException {
         // TODO Auto-generated method stub
         String type = request.getParameter("type");
+        String connectionParamsJson = request.getParameter("connectionParams");
+        String values = request.getParameter("values");
+        
         PrintWriter writer = response.getWriter();
         
-        ConnectionParams connectionParams = new ConnectionParams();
-        connectionParams.setHostname("localhost");
-        connectionParams.setPortNo(3306);
-        connectionParams.setUsername("root");
-        connectionParams.setPassword("root");
+//        ConnectionParams connectionParams = new Gson().fromJson(connectionParamsJson, ConnectionParams.class);
+        ConnectionParams connectionParams = new ConnectionParams("mysqlsync", "localhost", 3306, "root", "root");
+        
         DatabaseOperations dbo = new DatabaseOperations(connectionParams);
         String sJsonResponse = "";
-        String sDatabaseName = "mysqlsync";
-
+        
         try {
             if (type.equals("getAllTables")) {
-                sJsonResponse = dbo.getAllTables(sDatabaseName);
+                sJsonResponse = dbo.getAllTables(connectionParams.getDatabaseName());
             } else if (type.equals("getAllConnections")) {
-                sJsonResponse = dbo.getAllConnections2(sDatabaseName);
+                sJsonResponse = dbo.getAllConnections();
             } else if (type.equals("getAllConnectionGroups")) {
-                sJsonResponse = dbo.getAllConnectionGroups(sDatabaseName);
+                sJsonResponse = dbo.getAllConnectionGroups();
             } else if (type.equals("getAllGroupTables")) {
-                sJsonResponse = dbo.getAllGroupTables(sDatabaseName);
-            } else if (type.equals("getAllConnectionGroups")) {
-                sJsonResponse = dbo.getAllConnectionGroups(sDatabaseName);
-            } else if (type.equals("getAllConnectionGroups")) {
-                sJsonResponse = dbo.getAllConnectionGroups(sDatabaseName);
+                sJsonResponse = dbo.getAllGroupTables();
+            } else if (type.equals("insertGroupTable")) {
+                TblGroupTables tblGroupTables = gson.fromJson(values, TblGroupTables.class);
+                sJsonResponse = dbo.insertGroupTable(tblGroupTables);
+            } else if (type.equals("insertConnectionGroup")) {
+                TblConnectionGroups tblConnectionGroups = gson.fromJson(values, TblConnectionGroups.class);
+                sJsonResponse = dbo.insertConnectionGroup(tblConnectionGroups);
+            } else if (type.equals("insertConnection")) {
+                TblConnections tblConnections = gson.fromJson(values, TblConnections.class);
+                sJsonResponse = dbo.insertConnection(tblConnections);
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block

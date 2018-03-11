@@ -9,16 +9,20 @@ import com.kashyap1113.mysqlsynctool.model.dto.TblConnections;
 import com.kashyap1113.mysqlsynctool.model.dto.TblGroupTables;
 
 public interface MySQLSyncToolDAO {
+    public int insertConnection(TblConnections tblConnections);
     public List<TblConnections> getAllConnections();
     public TblConnections getConnectionById(int id);
     public boolean updateConnection(TblConnections tblConnections);
     public boolean deleteConnection(int id);
     
+    public int insertConnectionGroup(TblConnectionGroups tblConnectionGroups);
     public List<TblConnectionGroups> getAllConnectionGroups();
     public TblConnectionGroups getConnectionGroupById(int id);
+    public List<TblConnectionGroups> getAllConnectionGroupsByConnectionId();
     public boolean updateConnectionGroup(TblConnectionGroups tblConnectionGroups);
     public boolean deleteConnectionGroup(int id);
     
+    public int insertGroupTable(TblGroupTables tblGroupTables);
     public List<TblGroupTables> getAllGroupTables();
     public List<TblGroupTables> getAllGroupTablesByGroupId(int groupId);    
     public TblGroupTables getGroupTablesById(int id);

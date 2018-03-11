@@ -36,8 +36,7 @@ public class DatabaseOperations {
 	    this.connectionParams = connectionParams;
 	}
 
-    public String getAllTables(String sDatabaseName) {
-        connectionParams.setDatabaseName(sDatabaseName);
+    public String getAllTables(String sDatabaseName) {        
         connection = new ConnectionManager(connectionParams).getConnection();		
 		String sTableName = "";
 		List<String> alTables = new ArrayList<String>();
@@ -108,8 +107,7 @@ public class DatabaseOperations {
         return gson.toJson(apiResponse);
     }
     
-    public String getAllConnections(String databaseName) {
-        connectionParams.setDatabaseName(databaseName);
+    public String getAllConnections() {        
         ApiResponse<List<TblConnections>> apiResponse = new ApiResponse<List<TblConnections>>();
         
         dao = new MySQLSyncToolDAOImpl(connectionParams);
@@ -126,8 +124,7 @@ public class DatabaseOperations {
     
     
     
-    public String getAllConnectionGroups(String databaseName) {
-        connectionParams.setDatabaseName(databaseName);
+    public String getAllConnectionGroups() {
         ApiResponse<List<TblConnectionGroups>> apiResponse = new ApiResponse<List<TblConnectionGroups>>();
         
         dao = new MySQLSyncToolDAOImpl(connectionParams);
@@ -142,8 +139,7 @@ public class DatabaseOperations {
         return gson.toJson(apiResponse);
     }
     
-    public String getAllGroupTables(String databaseName) {
-        connectionParams.setDatabaseName(databaseName);
+    public String getAllGroupTables() {
         ApiResponse<List<TblGroupTables>> apiResponse = new ApiResponse<List<TblGroupTables>>();
         
         dao = new MySQLSyncToolDAOImpl(connectionParams);
@@ -158,4 +154,39 @@ public class DatabaseOperations {
         return gson.toJson(apiResponse);
     }
 
+    public String insertConnection(TblConnections tblConnections) {
+        String result = "";
+        dao = new MySQLSyncToolDAOImpl(connectionParams);
+        int id = dao.insertConnection(tblConnections);
+        if (id > 0) {
+            result = "success";
+        } else {
+            result = "fail";
+        }
+        return gson.toJson(result);
+    }
+    
+    public String insertConnectionGroup(TblConnectionGroups tblConnectionGroups) {
+        String result = "";
+        dao = new MySQLSyncToolDAOImpl(connectionParams);
+        int id = dao.insertConnectionGroup(tblConnectionGroups);
+        if (id > 0) {
+            result = "success";
+        } else {
+            result = "fail";
+        }
+        return gson.toJson(result);
+    }
+    
+    public String insertGroupTable(TblGroupTables tblGroupTables) {
+        String result = "";
+        dao = new MySQLSyncToolDAOImpl(connectionParams);
+        int id = dao.insertGroupTable(tblGroupTables);
+        if (id > 0) {
+            result = "success";
+        } else {
+            result = "fail";
+        }
+        return gson.toJson(result);
+    }
 }
