@@ -195,4 +195,36 @@ public class DatabaseOperations {
         }
         return gson.toJson(apiResponse);
     }
+    
+    public String getConnectionById(int connectionId) {
+        ApiResponse<TblConnections> apiResponse = new ApiResponse<TblConnections>();
+        TblConnections tblConnection = dao.getConnectionById(connectionId);
+        if (tblConnection != null) {
+            apiResponse.setResultSuccess();
+            apiResponse.setData(tblConnection);
+        } else {
+            apiResponse.setResultFail();
+        }
+        return gson.toJson(apiResponse);
+    }
+    
+    public String deleteConnection(int connectionId) {
+        String result = "";
+        if (dao.deleteConnection(connectionId)) {
+            result = "success";
+        } else {
+            result = "fail";
+        }
+        return gson.toJson(result);        
+    }
+    
+    public String updateConnection(TblConnections tblConnection) {
+        String result = "";
+        if (dao.updateConnection(tblConnection)) {
+            result = "success";
+        } else {
+            result = "fail";
+        }
+        return gson.toJson(result);
+    }
 }

@@ -75,6 +75,19 @@ public class DatabaseOperationsServlet extends HttpServlet {
             } else if (type.equals("getGroupTablesByGroupId")) {
                 int groupId = Integer.parseInt(request.getParameter("groupId"));
                 sJsonResponse = dbo.getGroupTablesByGroupId(groupId);
+            } else if (type.equals("getConnectionById")) {
+                int connectionId = request.getParameter("values") == null ? 
+                        0 : Integer.parseInt(request.getParameter("values"));
+                sJsonResponse = dbo.getConnectionById(connectionId);
+            } else if (type.equals("updateConnection")) {
+                TblConnections tblConnection = gson.fromJson(values, TblConnections.class);
+                sJsonResponse = dbo.updateConnection(tblConnection);
+            } else if (type.equals("deleteConnection")) {
+                int connectionId = request.getParameter("values") == null ? 
+                        0 : Integer.parseInt(request.getParameter("values"));
+                sJsonResponse = dbo.deleteConnection(connectionId);
+            } else if (type.equals("")) {
+                
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block

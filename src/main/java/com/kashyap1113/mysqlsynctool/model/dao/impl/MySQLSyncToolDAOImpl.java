@@ -125,7 +125,7 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
             pstmt.setInt(3, tblConnections.getPortNo());
             pstmt.setString(4, tblConnections.getUsername());
             pstmt.setString(5, tblConnections.getPassword());
-            pstmt.setString(6, tblConnections.getConnectionName());
+            pstmt.setString(6, tblConnections.getConnectionType());
             pstmt.setInt(7, tblConnections.getId());
             pstmt.executeUpdate();  
             result = true;
