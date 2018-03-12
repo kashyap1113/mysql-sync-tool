@@ -227,4 +227,28 @@ public class DatabaseOperations {
         }
         return gson.toJson(result);
     }
+    
+    public String getConnectionGroupById(int connectionId) {    
+        ApiResponse<TblConnectionGroups> apiResponse = new ApiResponse<TblConnectionGroups>();
+        TblConnectionGroups tblConnectionGroup = dao.getConnectionGroupById(connectionId);
+        if (tblConnectionGroup != null) {
+            apiResponse.setResultSuccess();
+            apiResponse.setData(tblConnectionGroup);
+        } else {
+            apiResponse.setResultFail();
+        }
+        return gson.toJson(apiResponse);
+    }
+    
+    public String getAllConnectionGroupsByConnectionId(int connectionId) {
+        ApiResponse<List<TblConnectionGroups>> apiResponse = new ApiResponse<List<TblConnectionGroups>>();
+        List<TblConnectionGroups> tblConnectionGroupList = dao.getAllConnectionGroupsByConnectionId(connectionId);
+        if (tblConnectionGroupList.size() > 0) {
+            apiResponse.setResultSuccess();
+            apiResponse.setData(tblConnectionGroupList);
+        } else {
+            apiResponse.setResultNoData();
+        }
+        return gson.toJson(apiResponse);
+    }
 }

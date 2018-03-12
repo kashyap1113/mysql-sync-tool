@@ -86,8 +86,14 @@ public class DatabaseOperationsServlet extends HttpServlet {
                 int connectionId = request.getParameter("values") == null ? 
                         0 : Integer.parseInt(request.getParameter("values"));
                 sJsonResponse = dbo.deleteConnection(connectionId);
-            } else if (type.equals("")) {
-                
+            } else if (type.equals("getConnectionGroupById")) {
+                int connectionId = request.getParameter("values") == null ? 
+                        0 : Integer.parseInt(request.getParameter("values"));
+                sJsonResponse = dbo.getConnectionGroupById(connectionId);
+            } else if (type.equals("getAllConnectionGroupsByConnectionId")) {
+                int connectionId = request.getParameter("values") == null ? 
+                        0 : Integer.parseInt(request.getParameter("values"));
+                sJsonResponse = dbo.getAllConnectionGroupsByConnectionId(connectionId);
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
