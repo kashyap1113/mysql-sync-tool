@@ -94,6 +94,13 @@ public class DatabaseOperationsServlet extends HttpServlet {
                 int connectionId = request.getParameter("values") == null ? 
                         0 : Integer.parseInt(request.getParameter("values"));
                 sJsonResponse = dbo.getAllConnectionGroupsByConnectionId(connectionId);
+            } else if (type.equals("updateConnectionGroup")) {
+                TblConnectionGroups tblConnectionGroup = gson.fromJson(values, TblConnectionGroups.class);
+                sJsonResponse = dbo.updateConnectionGroup(tblConnectionGroup);
+            } else if (type.equals("deleteConnectionGroup")) {
+                int id = request.getParameter("values") == null ? 
+                        0 : Integer.parseInt(request.getParameter("values"));
+                sJsonResponse = dbo.deleteConnectionGroup(id);
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
