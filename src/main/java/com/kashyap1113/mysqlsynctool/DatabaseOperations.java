@@ -271,4 +271,26 @@ public class DatabaseOperations {
         }
         return gson.toJson(result);      
     }
+
+    public String getAllGroupTablesByGroupId(int groupId) {
+        ApiResponse<List<TblGroupTables>> apiResponse = new ApiResponse<List<TblGroupTables>>();
+        List<TblGroupTables> list = dao.getAllGroupTablesByGroupId(groupId);        
+        if (list.size() > 0) {
+            apiResponse.setResultSuccess();
+            apiResponse.setData(list);
+        } else {
+            apiResponse.setResultNoData();
+        }
+        return gson.toJson(apiResponse);
+    }
+
+    public String deleteGroupTable(int id) {
+        String result = "";
+        if (dao.deleteGroupTable(id)) {
+            result = "success";
+        } else {
+            result = "fail";
+        }
+        return gson.toJson(result);  
+    }
 }

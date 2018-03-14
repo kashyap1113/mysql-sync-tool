@@ -118,6 +118,16 @@ public class DatabaseOperationsServlet extends HttpServlet {
                 int id = request.getParameter("values") == null ? 
                         0 : Integer.parseInt(request.getParameter("values"));
                 sJsonResponse = dbo.deleteConnectionGroup(id);
+            } else if (type.equals("getAllGroupTablesByGroupId")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getAllGroupTablesByGroupId&values=2
+                int id = request.getParameter("values") == null ? 
+                        0 : Integer.parseInt(request.getParameter("values"));
+                sJsonResponse = dbo.getAllGroupTablesByGroupId(id);
+            } else if (type.equals("deleteGroupTable")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=deleteGroupTable&values=3
+                int id = request.getParameter("values") == null ? 
+                        0 : Integer.parseInt(request.getParameter("values"));
+                sJsonResponse = dbo.deleteGroupTable(id);
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
