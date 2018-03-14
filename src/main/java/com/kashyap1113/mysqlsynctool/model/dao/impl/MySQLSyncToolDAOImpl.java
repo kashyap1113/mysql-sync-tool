@@ -247,8 +247,8 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, tblConnectionGroups.getConnectionId());
-            pstmt.setString(1, tblConnectionGroups.getGroupName());
-            pstmt.setInt(2, tblConnectionGroups.getGroupId());
+            pstmt.setString(2, tblConnectionGroups.getGroupName());
+            pstmt.setInt(3, tblConnectionGroups.getGroupId());
             pstmt.executeUpdate();
             result = true;
         } catch (SQLException e) {
@@ -283,13 +283,13 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
     public int insertGroupTable(TblGroupTables tblGroupTables) {
         connection = new ConnectionManager(connectionParams).getConnection();
         int id = 0;
-        sql = "INSERT INTO tbl_connection_groups (group_id, table_name, is_schema, is_data) VALUES (?,?,?,?)";
+        sql = "INSERT INTO tbl_group_tables (group_id, table_name, is_schema, is_data) VALUES (?,?,?,?)";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, tblGroupTables.getGroupId());
             pstmt.setString(2, tblGroupTables.getTableName());
-            pstmt.setString(3, tblGroupTables.getIsSchema());
-            pstmt.setString(4, tblGroupTables.getIsData());
+            pstmt.setBoolean(3, Boolean.valueOf(tblGroupTables.getIsSchema().toUpperCase()));
+            pstmt.setBoolean(4, Boolean.valueOf(tblGroupTables.getIsData().toUpperCase()));
             id = pstmt.executeUpdate();
         } catch (SQLException e) {
             // TODO Auto-generated catch block

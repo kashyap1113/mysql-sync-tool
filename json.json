@@ -4,4 +4,30 @@
 	"tableName":"test_table",
     "isSchema":"TRUE",
     "isData":"FALSE"
+},
+
+{
+	"__comment":"insertConnectionGroup",
+	"connectionId":"1",
+    "groupName":"test_group"    
+},
+{
+	"__comment":"insertConnection",
+	"connectionName":"conn1",
+    "hostname":"local1",
+    "portNo":3308,
+    "username":"root",
+    "password":"toor",
+    "connectionType":"local"
+},
+
+{
+	"__comment":"updateConnection",
+ 	"id":2,
+	"connectionName":"conn1",
+    "hostname":"local1",
+    "portNo":3308,
+    "username":"root",
+    "password":"toor",
+    "connectionType":"local"
 }

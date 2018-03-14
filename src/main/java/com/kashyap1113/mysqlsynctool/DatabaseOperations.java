@@ -253,8 +253,13 @@ public class DatabaseOperations {
     }
 
     public String updateConnectionGroup(TblConnectionGroups tblConnectionGroup) {
-        // TODO Auto-generated method stub
-        return null;
+        String result = "";
+        if (dao.updateConnectionGroup(tblConnectionGroup)) {
+            result = "success";
+        } else {
+            result = "fail";
+        }
+        return gson.toJson(result);
     }
 
     public String deleteConnectionGroup(int id) {

@@ -67,42 +67,54 @@ public class DatabaseOperationsServlet extends HttpServlet {
                 // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getAllGroupTables
                 sJsonResponse = dbo.getAllGroupTables();
             } else if (type.equals("insertGroupTable")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=insertGroupTable&values={"groupId":1,"tableName":"test_table","isSchema":"TRUE","isData":"FALSE"}
                 TblGroupTables tblGroupTables = gson.fromJson(values, TblGroupTables.class);
                 sJsonResponse = dbo.insertGroupTable(tblGroupTables);
             } else if (type.equals("insertConnectionGroup")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=insertConnectionGroup&values={"connectionId":"2","groupName":"test_group2"}
                 TblConnectionGroups tblConnectionGroups = gson.fromJson(values, TblConnectionGroups.class);
                 sJsonResponse = dbo.insertConnectionGroup(tblConnectionGroups);
             } else if (type.equals("insertConnection")) {
+             // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=insertConnectionGroup&values={"connectionName":"conn1","hostname":"local1","portNo":3308,"username":"root","password":"toor","connectionType":"local"}
                 TblConnections tblConnections = gson.fromJson(values, TblConnections.class);
                 sJsonResponse = dbo.insertConnection(tblConnections);
-            } else if (type.equals("getGroupsByConnection")) {                
+            } else if (type.equals("getGroupsByConnection")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getGroupsByConnection
                 sJsonResponse = dbo.getGroupsByConnection();
             } else if (type.equals("getGroupTablesByGroupId")) {
-                int groupId = Integer.parseInt(request.getParameter("groupId"));
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getGroupTablesByGroupId&values=1
+                int groupId = Integer.parseInt(request.getParameter("values"));
                 sJsonResponse = dbo.getGroupTablesByGroupId(groupId);
             } else if (type.equals("getConnectionById")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getConnectionById&values=3
                 int connectionId = request.getParameter("values") == null ? 
                         0 : Integer.parseInt(request.getParameter("values"));
                 sJsonResponse = dbo.getConnectionById(connectionId);
             } else if (type.equals("updateConnection")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=updateConnection&values={"id":2,"connectionName":"conn1","hostname":"local1","portNo":3308,"username":"root","password":"toor","connectionType":"local"}
                 TblConnections tblConnection = gson.fromJson(values, TblConnections.class);
                 sJsonResponse = dbo.updateConnection(tblConnection);
             } else if (type.equals("deleteConnection")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=deleteConnection&values=2
                 int connectionId = request.getParameter("values") == null ? 
                         0 : Integer.parseInt(request.getParameter("values"));
                 sJsonResponse = dbo.deleteConnection(connectionId);
             } else if (type.equals("getConnectionGroupById")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getConnectionGroupById&values=2
                 int connectionId = request.getParameter("values") == null ? 
                         0 : Integer.parseInt(request.getParameter("values"));
                 sJsonResponse = dbo.getConnectionGroupById(connectionId);
             } else if (type.equals("getAllConnectionGroupsByConnectionId")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getAllConnectionGroupsByConnectionId&values=2
                 int connectionId = request.getParameter("values") == null ? 
                         0 : Integer.parseInt(request.getParameter("values"));
                 sJsonResponse = dbo.getAllConnectionGroupsByConnectionId(connectionId);
             } else if (type.equals("updateConnectionGroup")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=updateConnectionGroup&values={"groupId":2,"connectionId":2,"groupName":"test_group5"}
                 TblConnectionGroups tblConnectionGroup = gson.fromJson(values, TblConnectionGroups.class);
                 sJsonResponse = dbo.updateConnectionGroup(tblConnectionGroup);
             } else if (type.equals("deleteConnectionGroup")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=deleteConnectionGroup&values=3
                 int id = request.getParameter("values") == null ? 
                         0 : Integer.parseInt(request.getParameter("values"));
                 sJsonResponse = dbo.deleteConnectionGroup(id);
