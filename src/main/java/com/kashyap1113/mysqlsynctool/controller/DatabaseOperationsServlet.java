@@ -52,14 +52,19 @@ public class DatabaseOperationsServlet extends HttpServlet {
         
         try {
             if (type.equals("getAllTables")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getAllTables
                 sJsonResponse = dbo.getAllTables(connectionParams.getDatabaseName());
             } else if (type.equals("getConnectionList")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getConnectionList
                 sJsonResponse = dbo.getConnectionList();
             }else if (type.equals("getAllConnections")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getAllConnections
                 sJsonResponse = dbo.getAllConnections();
             } else if (type.equals("getAllConnectionGroups")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getAllConnectionGroups
                 sJsonResponse = dbo.getAllConnectionGroups();
             } else if (type.equals("getAllGroupTables")) {
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getAllGroupTables
                 sJsonResponse = dbo.getAllGroupTables();
             } else if (type.equals("insertGroupTable")) {
                 TblGroupTables tblGroupTables = gson.fromJson(values, TblGroupTables.class);

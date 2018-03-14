@@ -1,0 +1,7 @@
+{
+	"__comment":"insertGroupTable",
+	"groupId":1,
+	"tableName":"test_table",
+    "isSchema":"TRUE",
+    "isData":"FALSE"
+}
