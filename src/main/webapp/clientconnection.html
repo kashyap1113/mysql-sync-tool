@@ -19,6 +19,31 @@
 					},
 					dataType : 'text'
 					});}
+				
+				
+				$(document).on("click","button[name='saveClientConnection']",function(){
+					var localConnectionInformation = new Object();
+					localConnectionInformation.connectionName = $("#connectionname").val();
+					localConnectionInformation.hostname  = $("#host").val();
+					localConnectionInformation.portNo = $("#port").val();
+					localConnectionInformation.username=$("#username").val();
+					localConnectionInformation.password=$("#Password").val();
+					localConnectionInformation.connectionType="local";
+					var jsonlocalConnectionInformation= JSON.stringify(localConnectionInformation);
+					
+					$.ajax({
+						type : "post",
+						url : "databaseoperations.do",
+						data : "type=dbreqtest&jsonPara="+ jsonlocalConnectionInformation ,
+						success : function(response) {
+							alert(response);
+						},
+						dataType : 'text'
+						});
+					
+					//document.write(jsonlocalConnectionInformation);
+				});
+				
 		</script>
 		
 	</head>
@@ -74,7 +99,7 @@
 				
 			</div>
 			
-			<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+			<button type="button" name="saveClientConnection" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
 				 <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span> Delete</button>
 			
 			</div>

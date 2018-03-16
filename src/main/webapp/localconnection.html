@@ -24,7 +24,63 @@
 			dataType : 'text'
 		});
 	});
+	
+	
+	$(document).on("click",".local_group_name",function(){
+		var iconclass=$(this).find("span").attr("class");
+		if(iconclass=="glyphicon glyphicon-folder-open"){$(this).find("span").attr("class","glyphicon glyphicon-folder-close");
+		$(this).siblings(".list-group").hide();}
+		else{$(this).find("span").attr("class","glyphicon glyphicon-folder-open");$(this).siblings(".list-group").show();}
+	});
+	//span[name='']
+	$(document).on("click","span[name='collapse']",function(){
+		var iconclass=$(this).attr("class");
+		if(iconclass=="glyphicon glyphicon-plus"){
+			$(this).attr("class","glyphicon glyphicon-minus");
+		}
+		else{
+			$(this).attr("class","glyphicon glyphicon-plus");
+		}
+	});
+	
+	
+		$(document).on("click","button[name='saveLocalConnection']",function(){
+			var localConnectionInformation = new Object();
+			localConnectionInformation.connectionName = $("#connectionname").val();
+			localConnectionInformation.hostname  = $("#host").val();
+			localConnectionInformation.portNo = $("#port").val();
+			localConnectionInformation.username=$("#username").val();
+			localConnectionInformation.password=$("#Password").val();
+			localConnectionInformation.connectionType="local";
+			var jsonlocalConnectionInformation= JSON.stringify(localConnectionInformation);
+			document.write(jsonlocalConnectionInformation);
+		});
+	
+	
 </Script>
+
+<style>
+ .connection_group{
+	margin-top: 10px;
+	margin-left: 10px;
+ }
+ 
+ .local_group_name{
+	cursor:pointer;
+ }
+ 
+ [name="group-names"]{
+	display:none;
+ }
+ 
+ span[name="collapse"]{
+	cursor:pointer;
+ }
+ 
+ span[name="edit-connection"]{
+	cursor:pointer;
+ }
+</style>
 
 </head>
 
@@ -33,18 +89,26 @@
 	<div id="menu" style="width: 300px; float: left; margin-right: 50px">
 		<h4>Local Database</h4>
 		<ul class="list-group">
-			<li class="list-group-item"><span data-toggle="collapse"
-				data-target="#demo" class="glyphicon glyphicon-plus"></span><span
-				class="glyphicon glyphicon-wrench"></span> gps
-				<div id="demo" class="collapse" style="margin-top: 10px;">
-					<span class="glyphicon glyphicon-folder-open"></span> Groups
-					<ul class="list-group" style="margin-top: 10px;">
+		
+			<li class="list-group-item">
+				<div class="group_operation">
+				
+				<span data-toggle="collapse"
+					data-target="#gps_group" class="glyphicon glyphicon-plus" name="collapse"></span><a href="localconnection.html"><span
+					class="glyphicon glyphicon-wrench" name="edit-connection"></span></a> gps
+				</div>			
+			<div id="gps_group" class="connection_group collapse">
+					<div class="local_group_name">
+						<span class="glyphicon glyphicon-folder-close"></span> Groups 
+					</div>
+					
+					<ul  name="group-names" class="list-group" style="margin-top: 10px;">
 						<li class="list-group-item"><span
-							class="glyphicon glyphicon-wrench"></span> Common</li>
+							class="glyphicon glyphicon-wrench"></span><a href="index.html"> Common</a></li>
 						<li class="list-group-item"><span
-							class="glyphicon glyphicon-wrench"></span> Screen</li>
+							class="glyphicon glyphicon-wrench"></span><a href="index.html"> Screen</a></li>
 						<li class="list-group-item"><span
-							class="glyphicon glyphicon-plus-sign"></span> Add New Group</li>
+							class="glyphicon glyphicon-plus-sign"></span><a href="index.html"> Add New Group</a></li>
 					</ul>
 				</div></li>
 			<li class="list-group-item"><span
@@ -85,7 +149,7 @@
 
 		</div>
 
-		<button type="button" class="btn btn-default">
+		<button type="button" name="saveLocalConnection" class="btn btn-default">
 			<span class="glyphicon glyphicon-floppy-disk"></span> Save
 		</button>
 		<button type="button" class="btn btn-primary">

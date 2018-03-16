@@ -9,6 +9,34 @@
 		<!-- Latest compiled JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		
+		<script>
+		
+			$(document).ready(function() {
+				genrateClientConnectionRow("manthanConnection");
+				genrateClientConnectionRow("kashyapConnection");
+			});
+			
+			function genrateClientConnectionRow(clientName){
+				var sClientConnectionTableROW = '<li class="list-group-item"><input type="checkbox"><span class="glyphicon glyphicon-user"></span> '+ clientName+'</li>';
+				$("ul[name='client-connections']").append(sClientConnectionTableROW);
+			}
+		
+		
+		$(document).on("click","",function(){
+			var localConnectionInformation = new Object();
+			localConnectionInformation.connectionName = "Raj";
+			localConnectionInformation.hostAddress  = 32;
+			localConnectionInformation.port = false;
+			localConnectionInformation.username="";
+			localConnectionInformation.password="";
+			var jsonlocalConnectionInformation= JSON.stringify(localConnectionInformation);
+			
+		});
+		
+			
+			
+		</script>
+		
 	</head>
 	
 	<body style="margin:10px;" >
@@ -33,7 +61,7 @@
 			
 			<div id="overview" style="width:700px;float:left">
 			<h3>Clients(70)</h3>
-			<ul class="list-group">
+			<ul class="list-group"  name="client-connections">
 				  <li class="list-group-item"><input type="checkbox"> Select All</li>
 				  <li class="list-group-item"><input type="checkbox"> <span class="glyphicon glyphicon-user"></span> Flitrack</li>
 				  <li class="list-group-item"><input type="checkbox"><span class="glyphicon glyphicon-user"></span> Mobitrack</li>
