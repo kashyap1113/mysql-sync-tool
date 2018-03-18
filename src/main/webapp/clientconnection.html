@@ -30,7 +30,7 @@
 					localConnectionInformation.password=$("#Password").val();
 					localConnectionInformation.connectionType="local";
 					var jsonlocalConnectionInformation= JSON.stringify(localConnectionInformation);
-					
+					alert(jsonlocalConnectionInformation);
 					$.ajax({
 						type : "post",
 						url : "databaseoperations.do",
