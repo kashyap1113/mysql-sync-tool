@@ -10,39 +10,105 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		
 		<script>
-				function() { $.ajax({
-					type : "get",
+				
+		$(document).ready(function() {
+			var connectionMode="Update";
+			
+			if(connectionMode=="Update"){
+				var iConnectionId=5;
+				$("input[name='connectionId']").val(iConnectionId);
+				$("button[name='saveClientConnection']").attr("name","updateClientConnection");
+				getConnectionById(iConnectionId);
+			}
+		});
+		
+		
+		
+		function getConnectionById(iConnectionId){
+				alert(iConnectionId);
+				$.ajax({
+					type : "post",
 					url : "databaseoperations.do",
-					data : "type=dbreqtest",
+					data : "type=getConnectionById&values="+ iConnectionId ,
 					success : function(response) {
 						alert(response);
+						jsonObject= JSON.parse(response);
+						if(jsonObject.result=="success"){
+							connectionData=jsonObject.data;
+							$("#connectionname").val(connectionData.connectionName);
+							 $("#host").val(connectionData.hostname);
+							 $("#port").val(connectionData.portNo);
+							 $("#username").val(connectionData.username);
+							 $("#Password").val(connectionData.password);
+							 
+						}
 					},
 					dataType : 'text'
-					});}
-				
+					});
+			};
+		
 				
 				$(document).on("click","button[name='saveClientConnection']",function(){
-					var localConnectionInformation = new Object();
-					localConnectionInformation.connectionName = $("#connectionname").val();
-					localConnectionInformation.hostname  = $("#host").val();
-					localConnectionInformation.portNo = $("#port").val();
-					localConnectionInformation.username=$("#username").val();
-					localConnectionInformation.password=$("#Password").val();
-					localConnectionInformation.connectionType="local";
-					var jsonlocalConnectionInformation= JSON.stringify(localConnectionInformation);
-					alert(jsonlocalConnectionInformation);
+					var clientConnectionInformation = new Object();
+					clientConnectionInformation.connectionName = $("#connectionname").val();
+					clientConnectionInformation.hostname  = $("#host").val();
+					clientConnectionInformation.portNo = $("#port").val();
+					clientConnectionInformation.username=$("#username").val();
+					clientConnectionInformation.password=$("#Password").val();
+					clientConnectionInformation.connectionType="client";
+					var jsonclientConnectionInformation= JSON.stringify(clientConnectionInformation);
+					
 					$.ajax({
 						type : "post",
 						url : "databaseoperations.do",
-						data : "type=dbreqtest&jsonPara="+ jsonlocalConnectionInformation ,
+						data : "type=insertConnection&values="+ jsonclientConnectionInformation ,
 						success : function(response) {
 							alert(response);
 						},
 						dataType : 'text'
 						});
-					
-					//document.write(jsonlocalConnectionInformation);
 				});
+				
+				
+				$(document).on("click","button[name='updateClientConnection']",function(){
+					var clientConnectionInformation = new Object();
+					clientConnectionInformation.id = $("input[name='connectionId']").val();
+					clientConnectionInformation.connectionName = $("#connectionname").val();
+					clientConnectionInformation.hostname  = $("#host").val();
+					clientConnectionInformation.portNo = $("#port").val();
+					clientConnectionInformation.username=$("#username").val();
+					clientConnectionInformation.password=$("#Password").val();
+					clientConnectionInformation.connectionType="client";
+					var jsonclientConnectionInformation= JSON.stringify(clientConnectionInformation);
+					
+					$.ajax({
+						type : "post",
+						url : "databaseoperations.do",
+						data : "type=updateConnection&values="+ jsonclientConnectionInformation ,
+						success : function(response) {
+							alert(response);
+						},
+						dataType : 'text'
+						});
+				});
+			
+				$(document).on("click","button[name='deleteclientConnection']",function(){
+					var iConnectionId=$("input[name='connectionId']").val();
+					$.ajax({
+						type : "post",
+						url : "databaseoperations.do",
+						data : "type=deleteConnection&values="+ iConnectionId,
+						success : function(response) {
+							alert(response);
+						},
+						dataType : 'text'
+						});
+				});
+			
+			
+				
+				
+				
 				
 		</script>
 		
@@ -51,7 +117,7 @@
 	<body style="margin:10px;" >
 	
 			<div id="menu" style="width:300px;float:left;margin-right:50px">
-			<h4>Local Database</h4>
+			<h4>client Database</h4>
 				<ul class="list-group">
 				  <li class="list-group-item"><span data-toggle="collapse" data-target="#demo" class="glyphicon glyphicon-plus"></span><span class="glyphicon glyphicon-wrench"></span> gps 
 				  <div id="demo" class="collapse" style="margin-top:10px;">
@@ -69,7 +135,7 @@
 			</div>
 			
 			<div id="overview" style="width:700px;float:left">
-			
+	<input type="hidden" name="connectionId" value=""/>		
 			
 			<div class="form-group">
 				<label for="name">Client Name:</label>
@@ -100,7 +166,7 @@
 			</div>
 			
 			<button type="button" name="saveClientConnection" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-				 <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+				 <button type="button" name="deleteclientConnection" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span> Delete</button>
 			
 			</div>
 	</body>

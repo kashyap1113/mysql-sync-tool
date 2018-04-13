@@ -8,37 +8,86 @@
 
 		<!-- Latest compiled JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script
+	src="./js/scipts.js"></script>
 		
 		<script>
+		var sConnectionId;
+		
+		$(document).ready(function() {
+			genrateLeftSlidebar();
 			
+		    sConnectionId = getUrlParameter('connectionid');
 			
+			if(typeof sConnectionId  !== "undefined")
+			{
+				//$("input[name=""]").val(sConnectionId);
+			}
+
+			
+				
+		});
 		
 		</script>
+		<style>
+ .connection_group{
+	margin-top: 10px;
+	margin-left: 10px;
+ }
+ 
+ .local_group_name{
+	cursor:pointer;
+ }
+ 
+ [name="group-names"]{
+	display:none;
+ }
+ 
+ span[name="collapse"]{
+	cursor:pointer;
+ }
+ 
+ span[name="edit-connection"]{
+	cursor:pointer;
+ }
+</style>
 		
 		
 	</head>
 	
 	<body style="margin:10px;" >
 	
-			<div id="menu" style="width:300px;float:left;margin-right:50px">
-			<h4>Local Database</h4>
-				<ul class="list-group">
-				  <li class="list-group-item"><span data-toggle="collapse" data-target="#demo" class="glyphicon glyphicon-plus"></span> <span class="glyphicon glyphicon-wrench"></span> gps 
-				  <div id="demo" class="collapse" style="margin-top:10px;">
-					<span class="glyphicon glyphicon-folder-open"></span>  Groups
-					<ul class="list-group" style="margin-top:10px;">
-				  <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Common</li>
-				  <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Screen</li>
-				  <li class="list-group-item"><span class="glyphicon glyphicon-plus-sign"></span> Add New Group</li>
-			</ul>
-				  </div>
-				  </li>
-				  <li class="list-group-item"><span class="glyphicon glyphicon-plus"></span> gps2</li>
-				  <li class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Third item</li>
-				  <li class="list-group-item"><span class="glyphicon glyphicon-plus-sign"></span> Add New Connection</li>
-			</ul>
-			</div>
-			
+		<div id="menu" style="width: 300px; float: left; margin-right: 50px">
+		<h4>Local Database</h4>
+		<ul name="leftSlideBar" class="list-group">
+		
+			<li class="list-group-item">
+				<div class="group_operation">
+				
+				<span data-toggle="collapse"
+					data-target="#gps_group" class="glyphicon glyphicon-plus" name="collapse"></span><a href="localconnection.html"><span
+					class="glyphicon glyphicon-wrench" name="edit-connection"></span></a> gps
+				</div>			
+			<div id="gps_group" class="connection_group collapse">
+					<div class="local_group_name">
+						<span class="glyphicon glyphicon-folder-close"></span> Groups 
+					</div>
+					
+					<ul  name="group-names" class="list-group" style="margin-top: 10px;">
+						<li class="list-group-item"><span
+							class="glyphicon glyphicon-wrench"></span><a href="index.html"> Common</a></li>
+						<li class="list-group-item"><span
+							class="glyphicon glyphicon-wrench"></span><a href="index.html"> Screen</a></li>
+						<li class="list-group-item"><span
+							class="glyphicon glyphicon-plus-sign"></span><a href="index.html"> Add New Group</a></li>
+					</ul>
+				</div></li>
+			<li class="list-group-item"><span
+				class="glyphicon glyphicon-plus"></span> gps2</li>
+			<li class="list-group-item"><span
+				class="glyphicon glyphicon-plus"></span> Third item</li>
+		</ul>
+	</div>	
 			<div id="overview" style="width:700px;float:left">
 			
 			

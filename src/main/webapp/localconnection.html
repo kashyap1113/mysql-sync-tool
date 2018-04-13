@@ -11,18 +11,31 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<Script>
-	$(document).ready(function() {
+<script
+	src="./js/scipts.js"></script>
 
-		$.ajax({
-			type : "get",
-			url : "databaseoperations.do",
-			data : "type=getalldatabase",
-			success : function(response) {
-				alert(response);
-			},
-			dataType : 'text'
-		});
+<Script>
+
+
+	$(document).ready(function() {
+		
+		genrateLeftSlidebar();
+		var sConnectionId = getUrlParameter('connectionid');
+	
+		if(typeof sConnectionId  !== "undefined")
+		{
+			getConnectionById(sConnectionId);
+		}
+		/*
+		var connectionMode="Update";
+		
+		if(connectionMode=="Update"){
+			var iConnectionId=3;
+			$("input[name='connectionId']").val(iConnectionId);
+			$("button[name='saveLocalConnection']").attr("name","updateLocalConnection");
+			getConnectionById(iConnectionId);
+		}
+	*/
 	});
 	
 	
@@ -43,8 +56,30 @@
 		}
 	});
 	
+function getConnectionById(iConnectionId){
+		
+		$.ajax({
+			type : "post",
+			url : "databaseoperations.do",
+			data : "type=getConnectionById&values="+ iConnectionId ,
+			success : function(response) {
+				jsonObject= JSON.parse(response);
+				if(jsonObject.result=="success"){
+					connectionData=jsonObject.data;
+					$("#connectionname").val(connectionData.connectionName);
+					 $("#host").val(connectionData.hostname);
+					 $("#port").val(connectionData.portNo);
+					 $("#username").val(connectionData.username);
+					 $("#Password").val(connectionData.password);
+					 
+				}
+			},
+			dataType : 'text'
+			});
+	};
+
 	
-		$(document).on("click","button[name='saveLocalConnection']",function(){
+$(document).on("click","button[name='saveLocalConnection']",function(){
 			var localConnectionInformation = new Object();
 			localConnectionInformation.connectionName = $("#connectionname").val();
 			localConnectionInformation.hostname  = $("#host").val();
@@ -53,9 +88,75 @@
 			localConnectionInformation.password=$("#Password").val();
 			localConnectionInformation.connectionType="local";
 			var jsonlocalConnectionInformation= JSON.stringify(localConnectionInformation);
-			document.write(jsonlocalConnectionInformation);
+			
+			$.ajax({
+				type : "post",
+				url : "databaseoperations.do",
+				data : "type=insertConnection&values="+ jsonlocalConnectionInformation ,
+				success : function(response) {
+					alert(response);
+				},
+				dataType : 'text'
+				});
+		});
+		
+		
+		$(document).on("click","button[name='updateLocalConnection']",function(){
+			var localConnectionInformation = new Object();
+			localConnectionInformation.id = $("input[name='connectionId']").val();
+			localConnectionInformation.connectionName = $("#connectionname").val();
+			localConnectionInformation.hostname  = $("#host").val();
+			localConnectionInformation.portNo = $("#port").val();
+			localConnectionInformation.username=$("#username").val();
+			localConnectionInformation.password=$("#Password").val();
+			localConnectionInformation.connectionType="local";
+			var jsonlocalConnectionInformation= JSON.stringify(localConnectionInformation);
+			
+			$.ajax({
+				type : "post",
+				url : "databaseoperations.do",
+				data : "type=updateConnection&values="+ jsonlocalConnectionInformation ,
+				success : function(response) {
+					alert(response);
+				},
+				dataType : 'text'
+				});
 		});
 	
+		$(document).on("click","button[name='deleteLocalConnection']",function(){
+			var iConnectionId=$("input[name='connectionId']").val();
+			$.ajax({
+				type : "post",
+				url : "databaseoperations.do",
+				data : "type=deleteConnection&values="+ iConnectionId,
+				success : function(response) {
+					alert(response);
+				},
+				dataType : 'text'
+				});
+		});
+	
+		
+	function getUrlParameter(sParam) {
+		    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+		        sURLVariables = sPageURL.split('&'),
+		        sParameterName,
+		        i;
+
+		    for (i = 0; i < sURLVariables.length; i++) {
+		        sParameterName = sURLVariables[i].split('=');
+
+		        if (sParameterName[0] === sParam) {
+		            return sParameterName[1] === undefined ? true : sParameterName[1];
+		        }
+		    }
+		};
+		
+		
+		
+		
+		
+		
 	
 </Script>
 
@@ -88,7 +189,7 @@
 
 	<div id="menu" style="width: 300px; float: left; margin-right: 50px">
 		<h4>Local Database</h4>
-		<ul class="list-group">
+		<ul name="leftSlideBar" class="list-group">
 		
 			<li class="list-group-item">
 				<div class="group_operation">
@@ -120,7 +221,7 @@
 
 	<div id="overview" style="width: 700px; float: left">
 
-
+<input type="hidden" name="connectionId" value=""/>
 		<div class="form-group">
 			<label for="name">Connection Name:</label> <input type="text"
 				class="form-control" id="connectionname">
@@ -152,7 +253,7 @@
 		<button type="button" name="saveLocalConnection" class="btn btn-default">
 			<span class="glyphicon glyphicon-floppy-disk"></span> Save
 		</button>
-		<button type="button" class="btn btn-primary">
+		<button type="button" name="deleteLocalConnection" class="btn btn-primary">
 			<span class="glyphicon glyphicon-trash"></span> Delete
 		</button>
 

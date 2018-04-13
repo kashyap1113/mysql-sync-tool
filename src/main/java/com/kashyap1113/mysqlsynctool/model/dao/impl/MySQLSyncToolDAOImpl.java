@@ -29,7 +29,7 @@ public class MySQLSyncToolDAOImpl extends BaseDAOImpl implements MySQLSyncToolDA
             pstmt.setString(4, tblConnections.getUsername());
             pstmt.setString(5, tblConnections.getPassword());
             pstmt.setString(6, tblConnections.getConnectionType());
-            id = pstmt.executeUpdate();
+7            id = pstmt.executeUpdate();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
