@@ -8,15 +8,15 @@
 
 		<!-- Latest compiled JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<script
-	src="./js/scipts.js"></script>
-		
+	src="./js/scipts.js"></script>		
 		<script>
 		var sConnectionId;
 		
 		$(document).ready(function() {
 			genrateLeftSlidebar();
-			
 		    sConnectionId = getUrlParameter('connectionid');
 			
 			if(typeof sConnectionId  !== "undefined")
@@ -24,9 +24,88 @@
 				//$("input[name=""]").val(sConnectionId);
 			}
 
-			
-				
+			 var Tables = [
+			      "ActionScript",
+			      "AppleScript",
+			      "Asp",
+			      "BASIC",
+			      "C",
+			      "C++",
+			      "Clojure",
+			      "COBOL",
+			      "ColdFusion",
+			      "Erlang",
+			      "Fortran",
+			      "Groovy",
+			      "Haskell",
+			      "Java",
+			      "JavaScript",
+			      "Lisp",
+			      "Perl",
+			      "PHP",
+			      "Python",
+			      "Ruby",
+			      "Scala",
+			      "Scheme"
+			    ];
+			 
+			    $( "#tableInput" ).autocomplete({
+			      source: Tables,
+			      select: function(event, ui) {
+			    	  	var sTableName=ui.item.value;
+			    	  	var tableAllreadyAvailable=($("tr[name='group-table'][tablename='"+ sTableName  +"']").length>0)?true:false;
+			    	  	
+			    	  	if(tableAllreadyAvailable!=true){
+			    	  		 var htmlRow = '<tr name="group-table" tablename="'+ ui.item.value +'"><td name="tablename">'+ ui.item.value +'</td><td name="schemaCheck"><input name="schema" type="checkbox"></td><td name="dataCheck"><input name="data" type="checkbox"></td></tr>';
+			                    $('#group-tables').append(htmlRow);
+			                    $( "#tableInput" ).val(""); 	
+			    	  	}
+			    	  	else{
+			    	  		alert("table already availble");
+			    	  	}	                  
+	                }
+			    });
 		});
+		
+		
+		$(document).on("click","button[name='save-group']",function(){
+			var sGroupName=$("#GroupName").val();
+			alert(sGroupName);
+			var sTableName;
+			var sIsSchema;
+			var sIsData;
+			var sTablesJsonRequestInput="";
+			var itr=0;
+			alert($("tr[name='group-table']").length);
+			$("tr[name='group-table']").each(function(){
+			
+				sTableName=$(this).find("td[name='tablename']").text();
+				sIsSchema=($(this).find("td[name='schemaCheck']").find("input").is("checked")==true)?"TRUE":"FALSE";
+				sIsData=($(this).find("td[name='dataCheck']").find("input").is("checked")==true)?"TRUE":"FALSE";
+				if(itr==0){
+					sTablesJsonRequestInput+="{'tableName':'"+ sTableName +"','isSchema':'"+ sIsSchema +"','isData':'"+ sIsData +"'}";	
+				}
+				else{
+					sTablesJsonRequestInput+=",{'tableName':'"+ sTableName +"','isSchema':'"+ sIsSchema +"','isData':'"+ sIsData +"'}";
+				}
+				itr++;	
+			});
+			var sJsonRequest="{ 'connectionId':'"+ sConnectionId +"','groupName':'"+ sGroupName +"',tables=["+ sTablesJsonRequestInput +"] }";
+			
+			console.log(sJsonRequest);
+			
+			$.ajax({
+				type : "post",
+				url : "databaseoperations.do",
+				data : "type=insertConnectionGroup&values="+ sJsonRequest,
+				success : function(response) {
+					alert(response);
+				},
+				dataType : 'text'
+				});
+			
+		});
+		
 		
 		</script>
 		<style>
@@ -98,15 +177,13 @@
 			
 			<div class="form-group">
 				<label for="name">Choose Table:</label>
-				<select class="multiselect-ui form-control" multiple="multiple" searchable="Search here..">
-					<option value="" disabled selected>Choose your database</option>
-					<option value="1">gpsdevicedata</option>
-					<option value="2">gpsdevicedatalive</option>
-					<option value="3">customers</option>
-					<option value="4">consignmentactualtours</option>
-					<option value="5">transporter</option>
-				</select>
-				 <table class="table table-striped">
+				<input type="text" class="form-control" id="tableInput">
+			</div>
+			
+			
+			<div class="form-group">
+			
+				 <table class="table table-striped" id="group-tables">
 					<thead>
 					  <tr>
 						<th>Table</th>
@@ -115,25 +192,11 @@
 					  </tr>
 					</thead>
 					<tbody>
-					  <tr>
-						<td>gpsdevicedata</td>
-						<td><input type="checkbox"></td>
-						<td><input type="checkbox"></td>
-					  </tr>
-					  <tr>
-						<td>gpsdevicedatalive</td>
-						<td><input type="checkbox"></td>
-						<td><input type="checkbox"></td>
-					  </tr>
-					  <tr>
-						<td>customers</td>
-						<td><input type="checkbox"></td>
-						<td><input type="checkbox"></td>
-					  </tr>
+					 
 					</tbody>
 				  </table>
 				<br/>
-				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+				<button name="save-group" type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
 				 <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span> Delete</button>
 			</div>
 			
