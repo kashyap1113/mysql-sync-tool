@@ -24,9 +24,10 @@ DROP TABLE IF EXISTS `tbl_connection_groups`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbl_connection_groups` (
   `group_id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_name` varchar(10) NOT NULL,
+  `connection_id` int(11) NOT NULL,
+  `group_name` varchar(50) NOT NULL,
   PRIMARY KEY (`group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,6 +36,7 @@ CREATE TABLE `tbl_connection_groups` (
 
 LOCK TABLES `tbl_connection_groups` WRITE;
 /*!40000 ALTER TABLE `tbl_connection_groups` DISABLE KEYS */;
+INSERT INTO `tbl_connection_groups` VALUES (1,1,'testrequest'),(2,2,'test_group5'),(4,2,'test_group2');
 /*!40000 ALTER TABLE `tbl_connection_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,7 +56,7 @@ CREATE TABLE `tbl_connections` (
   `password` varchar(10) NOT NULL,
   `connection_type` enum('client','local') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +65,7 @@ CREATE TABLE `tbl_connections` (
 
 LOCK TABLES `tbl_connections` WRITE;
 /*!40000 ALTER TABLE `tbl_connections` DISABLE KEYS */;
-INSERT INTO `tbl_connections` VALUES (1,'mypc','localhost',3306,'root','root','local'),(2,'officepc','12.23.34.45',3306,'root','root','client');
+INSERT INTO `tbl_connections` VALUES (3,'conn1','local1',3308,'root','toor','local');
 /*!40000 ALTER TABLE `tbl_connections` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +84,7 @@ CREATE TABLE `tbl_group_tables` (
   `is_data` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,6 +93,7 @@ CREATE TABLE `tbl_group_tables` (
 
 LOCK TABLES `tbl_group_tables` WRITE;
 /*!40000 ALTER TABLE `tbl_group_tables` DISABLE KEYS */;
+INSERT INTO `tbl_group_tables` VALUES (2,1,'test_table','','\0');
 /*!40000 ALTER TABLE `tbl_group_tables` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -103,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-10  0:12:34
+-- Dump completed on 2018-03-18 21:19:49

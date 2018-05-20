@@ -47,7 +47,12 @@ public class DatabaseOperationsServlet extends HttpServlet {
         
         try {
             if (type.equals("getAllTables")) {
-                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getAllTables
+                // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getAllTables&values={databaseName:"mysql",hostname:"localhost",portNo:3306,username:"root",password:"root"}
+                ConnectionParams remoteConnectionParams = gson.fromJson(values, ConnectionParams.class);
+                if (remoteConnectionParams != null) {
+                    connectionParams = remoteConnectionParams;
+                    dbo = new DatabaseOperations(connectionParams);
+                }
                 sJsonResponse = dbo.getAllTables(connectionParams.getDatabaseName());
             } else if (type.equals("getConnectionList")) {
                 // http://localhost:8080/mysqlsynctool/databaseoperations.do?type=getConnectionList
